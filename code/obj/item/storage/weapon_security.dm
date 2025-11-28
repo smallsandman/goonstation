@@ -18,6 +18,33 @@
 	icon_state = "evidence"
 	desc = "A box for collecting forensics evidence."
 
+/obj/item/storage/box/cardboardevidence
+	name = "Cardboard Box"
+	icon_state = "cardboard-evidence"
+	desc = "A cardboard box able to hold a bunch of things."
+	max_wclass = W_CLASS_NORMAL
+	w_class = W_CLASS_BULKY
+	burn_possible = TRUE
+
+/obj/item/storage/box/cardboardevidencelarge
+	name = "Large Cardboard Box"
+	icon_state = "cardboard-evidence-large"
+	desc = "A massive cardboard box to hold a ton of things."
+	max_wclass = W_CLASS_NORMAL
+	w_class = W_CLASS_HUGE
+	two_handed = TRUE
+	slots = 15
+	burn_possible = TRUE
+
+/obj/item/storage/box/secureevidencetote
+	name = "Secure Storage Tote"
+	icon_state = "secure-evidence-tote"
+	desc = "A massive secure tote to hold a ton of things, securely."
+	max_wclass = W_CLASS_NORMAL
+	w_class = W_CLASS_HUGE
+	two_handed = TRUE
+	slots = 15
+
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
