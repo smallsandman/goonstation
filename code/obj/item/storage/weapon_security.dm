@@ -15,7 +15,7 @@
 
 /obj/item/storage/box/evidence
 	name = "evidence box"
-	icon_state = "evidence"
+	icon_state = "baggie-evidence"
 	desc = "A box for collecting forensics evidence."
 
 /obj/item/storage/box/cardboardevidence
@@ -24,6 +24,9 @@
 	desc = "A cardboard box able to hold a bunch of things."
 	max_wclass = W_CLASS_NORMAL
 	w_class = W_CLASS_BULKY
+	//burning variables
+	burn_point = 220
+	burn_output = 2500
 	burn_possible = TRUE
 
 /obj/item/storage/box/cardboardevidencelarge
@@ -34,6 +37,9 @@
 	w_class = W_CLASS_HUGE
 	two_handed = TRUE
 	slots = 14
+	//Burning variables
+	burn_point = 220
+	burn_output = 3500
 	burn_possible = TRUE
 
 /obj/item/storage/box/secureevidencetote
