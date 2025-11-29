@@ -19,7 +19,7 @@
 	desc = "A box for collecting forensics evidence."
 
 /obj/item/storage/box/cardboardevidence
-	name = "Cardboard Box"
+	name = "cardboard box"
 	icon_state = "cardboard-evidence"
 	desc = "A cardboard box able to hold a bunch of things."
 	max_wclass = W_CLASS_NORMAL
@@ -27,7 +27,7 @@
 	burn_possible = TRUE
 
 /obj/item/storage/box/cardboardevidencelarge
-	name = "Large Cardboard Box"
+	name = "large cardboard box"
 	icon_state = "cardboard-evidence-large"
 	desc = "A massive cardboard box to hold a ton of things."
 	max_wclass = W_CLASS_NORMAL
@@ -37,7 +37,7 @@
 	burn_possible = TRUE
 
 /obj/item/storage/box/secureevidencetote
-	name = "Secure Storage Tote"
+	name = "secure storage tote"
 	icon_state = "secure-evidence-tote"
 	desc = "A massive secure tote to hold a ton of things, securely."
 	max_wclass = W_CLASS_NORMAL
