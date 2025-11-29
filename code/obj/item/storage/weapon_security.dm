@@ -33,7 +33,7 @@
 	max_wclass = W_CLASS_NORMAL
 	w_class = W_CLASS_HUGE
 	two_handed = TRUE
-	slots = 15
+	slots = 14
 	burn_possible = TRUE
 
 /obj/item/storage/box/secureevidencetote
@@ -43,7 +43,7 @@
 	max_wclass = W_CLASS_NORMAL
 	w_class = W_CLASS_HUGE
 	two_handed = TRUE
-	slots = 15
+	slots = 14
 
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
