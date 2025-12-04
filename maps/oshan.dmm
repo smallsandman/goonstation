@@ -11896,6 +11896,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSV" = (
@@ -31925,10 +31928,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/drink_rack/mug{
-	pixel_x = -28;
-	pixel_y = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
