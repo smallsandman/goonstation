@@ -166,7 +166,7 @@
 			boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 			return 1
 
-		if (ability_cloak == null) // If no cloak exists, create a new one
+		if (QDELETED(src.ability_cloak)) // If no cloak exists, create a new one
 			ability_cloak = new()
 			ability_cloak.is_summon = TRUE
 
