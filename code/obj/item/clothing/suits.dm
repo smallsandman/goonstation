@@ -1939,27 +1939,23 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_NOEXAMINE, src, 3)
 	unequipped(var/mob/user)
 		..()
-		//if (user.get_slot_from_item(src) != SLOT_WEAR_SUIT) // Since it gets unequipped when you swap over, and dropped here, this gets called twice (so you need this check for the second time)
-			//return
 		boutput(user, SPAN_ALERT("Your robes vanish, making you identifiable again."))
 		user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_SHROUDED)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NOEXAMINE, src)
 		if (is_summon == TRUE) // vanish (the ref is kept in cult_ability_holder so it doesn't GC)
 			src.visible_message(SPAN_SUBTLE("[user.name]'s [src.name] vanishes into thin air."))
-			if (src in user.contents)
-				var/mob/newPotentialHolder = src.loc // fuckkkk
-				newPotentialHolder.drop_item(src) // doesnt work
+			if (src in user.contents) // drop cloak first before sending to nullspace
+				var/mob/newPotentialHolder = src.loc
+				newPotentialHolder.drop_item(src)
 				src.set_loc(null)
 
-	attack_hand(var/mob/user) // If being held by a human and cult cloak, disappear
+	attack_hand(var/mob/user) // If this is a cult cloak, and it is being worn, vanish
 		var/mob/newPotentialHolder = src.loc
-		if (istype(user, /mob/living/carbon/human) && src.is_summon)
+		if (src.is_summon && newPotentialHolder != null)
 			newPotentialHolder.drop_item(src)
 			src.set_loc(null)
 		else
 			..()
-
-	//item/attack_hand()
 
 
 /obj/item/clothing/suit/wizrobe
