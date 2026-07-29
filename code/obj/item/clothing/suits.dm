@@ -1911,18 +1911,19 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/antagcult
 	name = "cultist robe" //placeholder
 	desc = "The garish, gruesome garments of a fearsome, fanatical follower..."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_cultantag.dmi'
+	icon = 'icons/obj/clothing/overcoats/item_suit_cult.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_cult.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	icon_state = "void-up" //placeholder
-	item_state = "void-up" //ditto
+	icon_state = "void" //placeholder
+	item_state = "void" //ditto
 	see_face = FALSE
 	magical = 1
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH | COVERSHAIR
 	body_parts_covered = TORSO|LEGS|ARMS
-	cant_drop = TRUE
-	cant_self_remove = TRUE
+	cant_drop = FALSE
+	cant_self_remove = FALSE // So you can either use the ability or take off the suit by hand to remove it (which should make it disappear, soon tm)
+	var/is_summon = FALSE // If true, this is part of the Summon Cloak ability, which makes it disappear if you take it off.
 
 	setupProperties()
 		..()
@@ -1930,17 +1931,32 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		setProperty("heatprot", 20)
 		setProperty("chemprot", 10)
 	equipped(var/mob/user, var/slot)
-		if (slot == SLOT_WEAR_SUIT)
-			boutput(user, SPAN_ALERT("You summon a set of robes to hide your identity."))
-			user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_SHROUDED)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_NOEXAMINE, src, 3)
 		..()
+		if (slot != SLOT_WEAR_SUIT)
+			return
+		boutput(user, SPAN_ALERT("You summon a set of robes to hide your identity."))
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_SHROUDED)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_NOEXAMINE, src, 3)
 	unequipped(var/mob/user)
+		..()
 		boutput(user, SPAN_ALERT("Your robes vanish, making you identifiable again."))
 		user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_SHROUDED)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NOEXAMINE, src)
-		// we should probably just delete the robe here
-		..()
+		if (is_summon == TRUE) // vanish (the ref is kept in cult_ability_holder so it doesn't GC)
+			src.visible_message(SPAN_SUBTLE("[user.name]'s [src.name] vanishes into thin air."))
+			if (src in user.contents) // drop cloak first before sending to nullspace
+				var/mob/newPotentialHolder = src.loc
+				newPotentialHolder.drop_item(src)
+				src.set_loc(null)
+
+	attack_hand(var/mob/user) // If this is a cult cloak, and it is being worn, vanish
+		var/mob/newPotentialHolder = src.loc
+		if (src.is_summon && newPotentialHolder != null)
+			newPotentialHolder.drop_item(src)
+			src.set_loc(null)
+		else
+			..()
+
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
