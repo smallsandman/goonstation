@@ -25,6 +25,7 @@ var/list/admin_verbs = list(
 
 		/client/proc/cmd_admin_pm,
 		/client/proc/blobsay,
+		/client/proc/cultsay,
 		/client/proc/dronesay,
 		/client/proc/dsay,
 		/client/proc/flocksay,
@@ -308,6 +309,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/spawn_custom_transmutation,
+		/client/proc/expell_object_from_mail_chutes,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,
@@ -501,7 +503,6 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
