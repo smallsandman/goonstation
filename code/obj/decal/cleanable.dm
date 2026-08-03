@@ -1564,6 +1564,16 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (prob(25)) //This emulates the effect of air randomly passing over the stuff
 			src.bang()
 
+// Cult Circles
+/obj/decal/cleanable/cultcircle
+	name = "cult circle"
+	desc = "Some kind of malevolent rune left by a Cultist."
+	icon = 'icons/obj/large/cultcircles96x96.dmi'
+	icon_state = "default_inactive"
+	layer = DECAL_LAYER
+	density = 0
+
+
 // GANG TAGS
 
 /obj/decal/cleanable/gangtag
