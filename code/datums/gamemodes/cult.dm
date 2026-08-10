@@ -140,7 +140,6 @@
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
 	var/list/datum/mind/members = list()
-	var/list/tags = list()
 
 	proc/living_member_count()
 		var/result = 0
