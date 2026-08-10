@@ -183,7 +183,10 @@
 				result[(member.current?.real_name)] = member
 		return result
 
-
+	proc/select_cult_name() // Not finished & Not Working!
+		// add the cult to their displayed name for antag and round end stuff. works hopefully??
+		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_CULT_LEADER)
+		leader_antag.display_name = "[src.cult_name] [leader_antag.display_name]"
 
 	New()
 		. = ..()
@@ -200,10 +203,6 @@
 		if (istype(ticker?.mode, /datum/game_mode/cult))
 			var/datum/game_mode/cult/gamemode = ticker.mode
 			gamemode.cults += src
-
-		// add the cult to their displayed name for antag and round end stuff. works hopefully??
-		//var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_CULT_LEADER)
-		//leader_antag.display_name = "[src.cult_name] [leader_antag.display_name]"
 
 		for (var/datum/mind/culter in src.members)
 			var/datum/antagonist/antag = culter.get_antagonist(ROLE_CULT_MEMBER)
