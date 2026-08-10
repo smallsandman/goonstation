@@ -1581,7 +1581,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		icon_state = style + icon_substate
 		return
 
-	/// Ensures this object will be tracked
+	/// Adds this object to the list of Cult Sacrifice Spots, allowing it to sacrifice nearby humans in a 3x3
 	proc/subscribe_to_cult(datum/cult/new_owner)
 		owner = new_owner
 		owner.sacrifice_zones.Add(src)
