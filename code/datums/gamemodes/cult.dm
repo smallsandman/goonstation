@@ -124,10 +124,9 @@
 		slow_process = 0
 
 	/// Run through all sacrificial zones and do their business.
-	for (var/datum/cult as anything in src.cults)
-		for (var/obj as anything in cult.sacrifice_zones)
-			obj.desc = "Hooray, I ran through this! Fantastic!"
-
+	for (var/datum/cult/cult as anything in src.cults)
+		for (var/obj/sacrifice_zone as anything in cult.sacrifice_zones)
+			sacrifice_zone.desc = "I looped through this!"
 
 /datum/cult
 	/// The maximum number of cult members per cult.
