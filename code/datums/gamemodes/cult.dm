@@ -123,23 +123,31 @@
 	else
 		slow_process = 0
 
+	/// Run through all sacrificial zones and do their business.
+	for (var/datum/cult as anything in src.cults)
+		for (var/obj as anything in cult.sacrifice_zones)
+			obj.desc = "Hooray, I ran through this! Fantastic!"
+
+
 /datum/cult
 	/// The maximum number of cult members per cult.
 	var/static/current_max_cult_members = 4
-	/// Cult tag icon states that are being used by other cults.
-	var/static/list/used_names
 	//Default color?
 	var/static/list/color ="#FFFFFF"
 	var/static/list/color_list = list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //(hopefully) colorblind friendly palette
 	var/static/list/colors_left = null
 	/// The chosen name of this cult.
 	var/cult_name = "Cult Name"
+	/// The "style" of the cult, which will (one day) effect cult circles and their respective robes
+	var/style = "default"
 	/// The ID of the color selected
 	var/color_id = 0
 	/// The mind of this cult's leader.
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
 	var/list/datum/mind/members = list()
+	/// All tracked objects that count as "sacrifice zones". Usually just Obsession object + sacrificial circles. These objects can move.
+	var/list/obj/sacrifice_zones = list()
 
 	proc/living_member_count()
 		var/result = 0
@@ -186,6 +194,7 @@
 		// add the cult to their displayed name for antag and round end stuff. works hopefully??
 		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_CULT_LEADER)
 		leader_antag.display_name = "[src.cult_name] [leader_antag.display_name]"
+		return
 
 	New()
 		. = ..()
@@ -193,8 +202,7 @@
 			colors_left = new/list(length(color_list))
 			for (var/color = 1 to length(color_list))
 				colors_left[color] = color
-		if (!src.used_names)
-			src.used_names = list()
+
 		color_id = pick(colors_left)
 		colors_left -= color_id
 		color = color_list[color_id]
