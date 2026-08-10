@@ -8,8 +8,6 @@
 	var/datum/cult/cult
 	/// The ability holder of this cult leader, containing their respective abilities.
 	var/datum/abilityHolder/cult/ability_holder
-	/// The headset of this cult leader, tracked so that additional channels may be later removed.
-	var/obj/item/device/radio/headset/headset
 
 	New(datum/mind/new_owner)
 		src.cult = new /datum/cult
@@ -20,7 +18,6 @@
 
 	disposing()
 		src.cult.leader = null
-
 		. = ..()
 
 	is_compatible_with(datum/mind/mind)
@@ -49,9 +46,6 @@
 		// Remove secret cult channel
 		src.owner.current.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_CULTCHAT_CULTLEADER) // Add a subchannel when the cult datum is implemented
 		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_CULTCHAT) // Add a subchannel when the cult datum is implemented
-
-
-		src.headset?.remove_radio_upgrade()
 
 	transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
 		var/datum/abilityHolder/cult/ability_source = src.owner.current.get_ability_holder(/datum/abilityHolder/cult)

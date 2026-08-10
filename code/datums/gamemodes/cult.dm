@@ -128,22 +128,14 @@
 	var/static/current_max_cult_members = 4
 	/// Cult tag icon states that are being used by other cults.
 	var/static/list/used_names
-	/// Radio frequencies that are being used by other cults.
-	var/static/list/used_frequencies
 	//Default color?
 	var/static/list/color ="#FFFFFF"
 	var/static/list/color_list = list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //(hopefully) colorblind friendly palette
 	var/static/list/colors_left = null
 	/// The chosen name of this cult.
 	var/cult_name = "Cult Name"
-	/// The randomly selected tag of this cult.
-	var/cult_tag = 0
 	/// The ID of the color selected
 	var/color_id = 0
-	/// The unique radio frequency that members of this cult will communicate over.
-	var/cult_frequency = 0
-	/// The location of this cult's locker.
-	var/area/base = null
 	/// The mind of this cult's leader.
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
@@ -156,7 +148,6 @@
 			if (!isdead(member.current))
 				result++
 		return result
-
 
 	proc/choose_new_leader()
 		var/datum/mind/smelly_unfortunate
@@ -192,6 +183,8 @@
 				result[(member.current?.real_name)] = member
 		return result
 
+
+
 	New()
 		. = ..()
 		if (colors_left == null)
@@ -200,26 +193,17 @@
 				colors_left[color] = color
 		if (!src.used_names)
 			src.used_names = list()
-		if (!src.used_frequencies)
-			src.used_frequencies = list()
 		color_id = pick(colors_left)
 		colors_left -= color_id
 		color = color_list[color_id]
-
-		src.cult_frequency = rand(1360, 1420)
-		while(src.cult_frequency in src.used_frequencies)
-			src.cult_frequency = rand(1360, 1420)
-		src.used_frequencies += src.cult_frequency
-		protected_frequencies += cult_frequency
-
 
 		if (istype(ticker?.mode, /datum/game_mode/cult))
 			var/datum/game_mode/cult/gamemode = ticker.mode
 			gamemode.cults += src
 
 		// add the cult to their displayed name for antag and round end stuff. works hopefully??
-		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_CULT_LEADER)
-		leader_antag.display_name = "[src.cult_name] [leader_antag.display_name]"
+		//var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_CULT_LEADER)
+		//leader_antag.display_name = "[src.cult_name] [leader_antag.display_name]"
 
 		for (var/datum/mind/culter in src.members)
 			var/datum/antagonist/antag = culter.get_antagonist(ROLE_CULT_MEMBER)

@@ -6,8 +6,6 @@
 
 	/// The cult that this cult member belongs to.
 	var/datum/cult/cult
-	/// The headset of this cult member, tracked so that additional channels may be later removed.
-	var/obj/item/device/radio/headset/headset
 	/// The ability holder of this cult member, containing their abilities
 	var/datum/abilityHolder/cult/ability_holder
 
