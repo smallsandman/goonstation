@@ -137,6 +137,22 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
+/datum/targetable/cult/create_circle
+	name = "Create rune"
+	desc = "Draw a dastardly rune with your own blood!"
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
+
+	cast()
+		..()
+		if (!holder)
+			return 1
+
+		var/obj/decal/cleanable/cultcircle/circle = new /obj/decal/cleanable/cultcircle
+		circle.set_loc(target)
+
+
+
 
 /datum/targetable/cult/summon_robe
 	name = "Summon robe"
