@@ -153,14 +153,10 @@
 			return 1
 		var/obj/decal/cultcircle/circle = new()
 		var/datum/cult/cult = null
-		circle.set_loc(get_turf(M))
+		var/turf/placement = get_step(get_turf(M), SOUTHWEST) // It's a 3x3, so offset by 1
+		circle.set_loc(placement)
 		boutput(M, SPAN_ALERT("You slice your arm and draw a terrible, malevolent rune!"))
-		var/turf/turf = get_turf(M)
-		get_turf(5, 5)
-
-
-		take_bleeding_damage(M, null, 50, D_SLASHING)
-
+		take_bleeding_damage(M, null, 20, D_SLASHING)
 
 		// If we have a cult
 		if (!iscultist(M))
