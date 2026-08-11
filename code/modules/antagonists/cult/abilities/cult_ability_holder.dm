@@ -35,7 +35,6 @@
 				spell.handleCast()
 		return
 
-
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/cult
@@ -57,7 +56,6 @@
 
 	onLife(var/mult = 1)
 		if(..()) return
-
 
 /datum/targetable/cult
 	icon = 'icons/mob/cult_ui.dmi' //placeholder
@@ -137,20 +135,41 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
+/// Creates a cult rune. Decorative, if not part of a cult, otherwise subscribes it to sacrifice checking
 /datum/targetable/cult/create_circle
 	name = "Create rune"
 	desc = "Draw a dastardly rune with your own blood!"
 	do_logs = FALSE
 	interrupt_action_bars = FALSE
+	cooldown = 10
 
 	cast()
 		..()
+		// Create decorative circle
 		if (!holder)
 			return 1
+		var/mob/living/carbon/human/M = holder.owner
+		if (!M)
+			return 1
+		var/obj/decal/cleanable/cultcircle/circle = new()
+		var/datum/cult/cult = null
+		circle.set_loc(get_turf(M))
+		boutput(M, SPAN_ALERT("You slice your arm and draw a terrible, malevolent rune!"))
+		M.damage_slashing(10)
+		bleed(M, 10, 10)
 
-		var/obj/decal/cleanable/cultcircle/circle = new /obj/decal/cleanable/cultcircle
-		circle.set_loc(target)
 
+		// If we have a cult
+		if (!iscultist(M))
+			return null
+		if (iscultleader(M))
+			var/datum/antagonist/cult_leader/antagonist_role = M.mind.get_antagonist(ROLE_CULT_LEADER)
+			cult = antagonist_role.cult
+		else
+			var/datum/antagonist/subordinate/cult_member/antagonist_role = M.mind.get_antagonist(ROLE_CULT_MEMBER)
+			cult = antagonist_role.cult
+		circle.subscribe_to_cult(cult)
+		boutput(M, "All hail " + SPAN_ALERT(cult.cult_name) + "!")
 
 
 

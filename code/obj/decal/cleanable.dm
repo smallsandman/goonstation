@@ -1578,7 +1578,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/icon_substate = "inactive"
 
 	proc/update_circle_icon()
-		icon_state = style + icon_substate
+		icon_state = style + "_" + icon_substate
 		return
 
 	/// Adds this object to the list of Cult Sacrifice Spots, allowing it to sacrifice nearby humans in a 3x3
