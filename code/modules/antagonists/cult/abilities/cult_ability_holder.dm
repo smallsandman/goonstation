@@ -151,12 +151,15 @@
 		var/mob/living/carbon/human/M = holder.owner
 		if (!M)
 			return 1
-		var/obj/decal/cleanable/cultcircle/circle = new()
+		var/obj/decal/cultcircle/circle = new()
 		var/datum/cult/cult = null
 		circle.set_loc(get_turf(M))
 		boutput(M, SPAN_ALERT("You slice your arm and draw a terrible, malevolent rune!"))
-		M.damage_slashing(10)
-		bleed(M, 10, 10)
+		var/turf/turf = get_turf(M)
+		get_turf(5, 5)
+
+
+		take_bleeding_damage(M, null, 50, D_SLASHING)
 
 
 		// If we have a cult
