@@ -127,6 +127,19 @@
 	for (var/datum/cult/cult as anything in src.cults)
 		for (var/obj/sacrifice_zone as anything in cult.sacrifice_zones)
 			sacrifice_zone.desc = "I looped through this!"
+			var/obj/decal/cultcircle/circle = null
+			if (istype(sacrifice_zone, /obj/decal/cultcircle)) // Cult circles get extra pazazz
+				circle = sacrifice_zone
+				circle.icon_substate = "active"
+				circle.update_circle_icon()
+
+				var/list/within_circle = range(2, get_step(get_turf(circle), NORTHEAST))
+				for (var/mob/living/carbon/human/human in within_circle)
+					human.emote("scream")
+					if (rand(0,100) > 95)
+						human.gib()
+
+
 
 /datum/cult
 	/// The maximum number of cult members per cult.

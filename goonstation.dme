@@ -2582,6 +2582,7 @@
 #include "code\obj\critter\plants.dm"
 #include "code\obj\critter\sword.dm"
 #include "code\obj\decal\cleanable.dm"
+#include "code\obj\decal\cult.dm"
 #include "code\obj\decal\flock.dm"
 #include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"

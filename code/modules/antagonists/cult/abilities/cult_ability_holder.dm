@@ -135,7 +135,7 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
 
-/// Creates a cult rune. Decorative, if not part of a cult, otherwise subscribes it to sacrifice checking
+/// Creates a cult rune. Decorative, if not part of a cult, otherwise subscribes it to sacrifice checking.
 /datum/targetable/cult/create_circle
 	name = "Create rune"
 	desc = "Draw a dastardly rune with your own blood!"
@@ -169,8 +169,6 @@
 			cult = antagonist_role.cult
 		circle.subscribe_to_cult(cult)
 		boutput(M, "All hail " + SPAN_ALERT(cult.cult_name) + "!")
-
-
 
 /datum/targetable/cult/summon_robe
 	name = "Summon robe"
