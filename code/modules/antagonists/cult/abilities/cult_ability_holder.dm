@@ -139,6 +139,7 @@
 /datum/targetable/cult/create_circle
 	name = "Create rune"
 	desc = "Draw a dastardly rune with your own blood!"
+	icon_state = "circle"
 	do_logs = FALSE
 	interrupt_action_bars = FALSE
 	cooldown = 10
@@ -176,6 +177,7 @@
 /datum/targetable/cult/summon_robe
 	name = "Summon robe"
 	desc = "Summons your robe."
+	icon_state = "cloak"
 	do_logs = FALSE
 	interrupt_action_bars = FALSE
 	var/obj/item/clothing/suit/antagcult/ability_cloak
