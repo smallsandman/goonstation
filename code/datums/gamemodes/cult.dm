@@ -123,24 +123,6 @@
 	else
 		slow_process = 0
 
-	/// Run through all sacrificial zones and do their business.
-	for (var/datum/cult/cult as anything in src.cults)
-		for (var/obj/sacrifice_zone as anything in cult.sacrifice_zones)
-			sacrifice_zone.desc = "I looped through this!"
-			var/obj/decal/cultcircle/circle = null
-			if (istype(sacrifice_zone, /obj/decal/cultcircle)) // Cult circles get extra pazazz
-				circle = sacrifice_zone
-				circle.icon_substate = "active"
-				circle.update_circle_icon()
-
-				var/list/within_circle = range(2, get_step(get_turf(circle), NORTHEAST))
-				for (var/mob/living/carbon/human/human in within_circle)
-					human.emote("scream")
-					if (rand(0,100) > 95)
-						human.gib()
-
-
-
 /datum/cult
 	/// The maximum number of cult members per cult.
 	var/static/current_max_cult_members = 4
@@ -209,6 +191,7 @@
 		return
 
 	New()
+		START_TRACKING // tracked by processes
 		. = ..()
 		if (colors_left == null)
 			colors_left = new/list(length(color_list))
@@ -226,3 +209,6 @@
 		for (var/datum/mind/culter in src.members)
 			var/datum/antagonist/antag = culter.get_antagonist(ROLE_CULT_MEMBER)
 			antag.display_name = "[src.cult_name] [antag.display_name]"
+
+	disposing()
+		STOP_TRACKING
