@@ -140,6 +140,8 @@
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
 	var/list/datum/mind/members = list()
+	/// Points
+	var/points = CULT_STARTING_POINTS
 
 	proc/living_member_count()
 		var/result = 0
@@ -206,6 +208,16 @@
 		for (var/datum/mind/culter in src.members)
 			var/datum/antagonist/antag = culter.get_antagonist(ROLE_CULT_MEMBER)
 			antag.display_name = "[src.cult_name] [antag.display_name]"
+
+	proc/award_points(amount, do_announce, text)
+		src.points += amount
+		if (do_announce == TRUE)
+			if (text == null)
+				text = "[src.cult_name] has been awarded [amount] points!"
+			text += SPAN_ITALIC("There are now [points] points to spend.")
+		boutput(src.leader.current, SPAN_CULTSAY(text))
+		for (var/datum/mind/culter as anything in src.members)
+			boutput(culter.current, SPAN_CULTSAY(text))
 
 	disposing()
 		..()
