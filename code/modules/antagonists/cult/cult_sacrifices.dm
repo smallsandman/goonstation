@@ -1,14 +1,15 @@
 /datum/potential_sacrifice_info
 	var/mob/living/carbon/human/human
 	var/human_name = "Somebody" // incase human becomes null, remember the name
+	var/has_mind = FALSE
 	var/base_points = 500
 	var/ever_living = FALSE
 	var/ever_awake = FALSE
 	proc/calc_points()
-		. = base_points
-		if (!ever_living)
+		. = src.base_points
+		if (!src.ever_living)
 			. -= 300
-		else if (!ever_awake)
+		else if (!src.ever_awake)
 			. -= 100
 		return .
 
@@ -35,17 +36,19 @@
 	proc/sacrifice_human(datum/potential_sacrifice_info/sacrifice)
 		if (!can_sacrifice_human(sacrifice.human))
 			return
-		var/points_awarded = sacrifice.calc_points()
-		owner.award_points(points_awarded, TRUE, "[sacrifice.human_name] has been sacrificed for [points_awarded] points!")
-		tracking_sacrifices.Remove(sacrifice)
+		if (sacrifice.has_mind == FALSE)
+			owner.award_points(1, TRUE, "[sacrifice.human_name] was sacrificed, but doesn't have a consciousness strong enough to appease [owner.cult_name].")
+		else
+			var/points_awarded = sacrifice.calc_points()
+			owner.award_points(points_awarded, TRUE, "[sacrifice.human_name] has been sacrificed for [points_awarded] points!")
+		if (sacrifice.human)
+			sacrifice.human.bioHolder.AddEffect("husk")
+			sacrifice.human.bioHolder.mobAppearance.flavor_text = "A dessicated husk."
+			sacrifice.human.disfigured = TRUE
+			sacrifice.human.UpdateName()
 		sacrificial_obj.visible_message(SPAN_ALERT("[sacrificial_obj] pulses and groans erratically, glowing with an evil aura!"))
+		src.tracking_sacrifices.Remove(sacrifice)
 		qdel(sacrifice)
-		if (!sacrifice.human)
-			return
-		sacrifice.human.bioHolder.AddEffect("husk")
-		sacrifice.human.bioHolder.mobAppearance.flavor_text = "A dessicated husk."
-		sacrifice.human.disfigured = TRUE
-		sacrifice.human.UpdateName()
 
 	proc/can_sacrifice_human(mob/living/carbon/human/human, do_check_list)
 		if (!human)
@@ -61,6 +64,11 @@
 				if (sacrifice.human == human)
 					return FALSE
 		return TRUE
+
+	proc/check_is_player(mob/target)
+		if (target.mind == null)
+			return FALSE
+		return target.mind.ckey != null
 
 	proc/check_human(datum/potential_sacrifice_info/sacrifice)
 		// Check if they have died
@@ -94,6 +102,7 @@
 				var/datum/potential_sacrifice_info/new_sac = new()
 				new_sac.human = human
 				new_sac.human_name = human.name
+				new_sac.has_mind = src.check_is_player(new_sac.human)
 				src.tracking_sacrifices.Add(new_sac) // Add this potential sacrifice
 
 		// Run through all potential sacs
@@ -108,19 +117,3 @@
 	disposing()
 		..()
 		STOP_TRACKING
-
-/*
-		for (var/obj/sacrifice_zone as anything in cult.sacrifice_zones)
-				sacrifice_zone.desc = "I looped through this!"
-				var/obj/decal/cultcircle/circle = null
-				if (istype(sacrifice_zone, /obj/decal/cultcircle)) // Cult circles get extra pazazz
-					circle = sacrifice_zone
-					circle.icon_substate = "active"
-					circle.update_circle_icon()
-
-					var/list/within_circle = range(2, get_step(get_turf(circle), NORTHEAST))
-					for (var/mob/living/carbon/human/human in within_circle)
-						human.emote("scream")
-						if (prob(5))
-							human.gib()
-*/

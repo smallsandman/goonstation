@@ -214,7 +214,7 @@
 		if (do_announce == TRUE)
 			if (text == null)
 				text = "[src.cult_name] has been awarded [amount] points!"
-			text += SPAN_ITALIC("There are now [points] points to spend.")
+			text += SPAN_ITALIC(" There are now [points] points to spend.")
 		boutput(src.leader.current, SPAN_CULTSAY(text))
 		for (var/datum/mind/culter as anything in src.members)
 			boutput(culter.current, SPAN_CULTSAY(text))
