@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\defines\cult.dm"
 #include "_std\defines\roles.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
@@ -358,6 +359,7 @@
 #include "code\datums\controllers\process\chemistry.dm"
 #include "code\datums\controllers\process\critters.dm"
 #include "code\datums\controllers\process\cross_server_sync.dm"
+#include "code\datums\controllers\process\cult.dm"
 #include "code\datums\controllers\process\day_night.dm"
 #include "code\datums\controllers\process\delete_queue.dm"
 #include "code\datums\controllers\process\events.dm"
