@@ -167,8 +167,11 @@
 		else
 			var/datum/antagonist/subordinate/cult_member/antagonist_role = M.mind.get_antagonist(ROLE_CULT_MEMBER)
 			cult = antagonist_role.cult
-		circle.subscribe_to_cult(cult)
-		boutput(M, "All hail " + SPAN_ALERT(cult.cult_name) + "!")
+
+		var/datum/cult_sacrifice_zone/new_sac_zone = new()
+		var/worked = new_sac_zone.try_connect(circle, cult)
+		if (worked == 1)
+			boutput(M, "All hail " + SPAN_ALERT(cult.cult_name) + "!")
 
 /datum/targetable/cult/summon_robe
 	name = "Summon robe"

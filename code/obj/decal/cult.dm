@@ -10,21 +10,22 @@
 	var/style = "default"
 	var/icon_substate = "inactive"
 
+	/// Make the circle glow!
+	proc/activate()
+		icon_substate = "active"
+		update_circle_icon()
+
+	/// Stop the circle from glowing!
+	proc/deactivate()
+		icon_substate = "inactive"
+		update_circle_icon()
+
 	proc/update_circle_icon()
 		icon_state = style + "_" + icon_substate
 		return
 
-	/// Adds this object to the list of Cult Sacrifice Spots, allowing it to sacrifice nearby humans in a 3x3
+	/// Sets this circle's style to the Cult's style
 	proc/subscribe_to_cult(datum/cult/new_owner)
 		owner = new_owner
-		owner.sacrifice_zones.Add(src)
 		style = owner.style
 		src.update_circle_icon()
-
-	disposing()
-		var/index = owner.sacrifice_zones.Find()
-		if (index != 0)
-			owner.sacrifice_zones.Remove(index)
-		else if (src in owner.sacrifice_zones)
-			owner.sacrifice_zones.Remove(index)
-		..()

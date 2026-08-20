@@ -140,8 +140,6 @@
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
 	var/list/datum/mind/members = list()
-	/// All tracked objects that count as "sacrifice zones". Usually just Obsession object + sacrificial circles. These objects can move.
-	var/list/obj/sacrifice_zones = list()
 
 	proc/living_member_count()
 		var/result = 0
@@ -191,7 +189,6 @@
 		return
 
 	New()
-		START_TRACKING // tracked by processes
 		. = ..()
 		if (colors_left == null)
 			colors_left = new/list(length(color_list))
@@ -211,4 +208,4 @@
 			antag.display_name = "[src.cult_name] [antag.display_name]"
 
 	disposing()
-		STOP_TRACKING
+		..()
