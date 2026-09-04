@@ -61,6 +61,9 @@
 /// both: color "#ffffff" | light: / background-color "#580283" | dark: background-color "#6f00a7"
 #define SPAN_THRALLSAY(string) ("<span class='thrallsay'>" + string + "</span>")
 
+/// both: color #B51D1D | background-color black
+#define SPAN_CULTSAY(string) ("<span class='cultsay'>" + string + "</span>")
+
 /// both: color "#ffffff" | light: background-color "#566B44" | dark: background-color "#7B8F68"
 #define SPAN_KUDZUSAY(string) ("<span class='kudzusay'>" + string + "</span>")
 

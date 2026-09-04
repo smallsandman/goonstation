@@ -123,11 +123,6 @@
 	else
 		slow_process = 0
 
-	/// Run through all sacrificial zones and do their business.
-	for (var/datum/cult/cult as anything in src.cults)
-		for (var/obj/sacrifice_zone as anything in cult.sacrifice_zones)
-			sacrifice_zone.desc = "I looped through this!"
-
 /datum/cult
 	/// The maximum number of cult members per cult.
 	var/static/current_max_cult_members = 4
@@ -145,8 +140,8 @@
 	var/datum/mind/leader = null
 	/// The minds of cult members associated with this cult. Does not include the cult leader.
 	var/list/datum/mind/members = list()
-	/// All tracked objects that count as "sacrifice zones". Usually just Obsession object + sacrificial circles. These objects can move.
-	var/list/obj/sacrifice_zones = list()
+	/// Points
+	var/points = CULT_STARTING_POINTS
 
 	proc/living_member_count()
 		var/result = 0
@@ -213,3 +208,16 @@
 		for (var/datum/mind/culter in src.members)
 			var/datum/antagonist/antag = culter.get_antagonist(ROLE_CULT_MEMBER)
 			antag.display_name = "[src.cult_name] [antag.display_name]"
+
+	proc/award_points(amount, do_announce, text)
+		src.points += amount
+		if (do_announce == TRUE)
+			if (text == null)
+				text = "[src.cult_name] has been awarded [amount] points!"
+			text += SPAN_ITALIC(" There are now [points] points to spend.")
+		boutput(src.leader.current, SPAN_CULTSAY(text))
+		for (var/datum/mind/culter as anything in src.members)
+			boutput(culter.current, SPAN_CULTSAY(text))
+
+	disposing()
+		..()

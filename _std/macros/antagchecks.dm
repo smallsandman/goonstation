@@ -13,6 +13,8 @@
 #define issawflybuddy(x) (istrainedsyndie(x) || isspythief(x))
 #define isrevolutionary(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_HEAD_REVOLUTIONARY) || x:mind:get_antagonist(ROLE_REVOLUTIONARY)))
 #define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_CONSPIRATOR))
+#define iscultist(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_CULT_MEMBER) || x:mind:get_antagonist(ROLE_CULT_LEADER)))
+#define iscultleader(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_CULT_LEADER))
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
 #define ischangelingcritter(x) (istype(x, /mob/living/critter/changeling))
