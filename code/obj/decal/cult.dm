@@ -5,7 +5,14 @@
 	icon_state = "default_inactive"
 	anchored = ANCHORED
 	layer = DECAL_LAYER
-	bounds = "96,96"
+	//bounds = "-32,-32 to 32,32"
+	bound_width = 96
+	bound_height = 96
+	pixel_x = -32
+	pixel_y = -32
+	bound_x = -32
+	bound_y = -32
+
 	var/datum/cult/owner = null
 	var/style = "default"
 	var/icon_substate = "inactive"

@@ -154,7 +154,7 @@
 			return 1
 		var/obj/decal/cultcircle/circle = new()
 		var/datum/cult/cult = null
-		var/turf/placement = get_step(get_turf(M), SOUTHWEST) // It's a 3x3, so offset by 1
+		var/turf/placement = get_turf(M) // It's a 3x3, but offset handled by circle
 		circle.set_loc(placement)
 		boutput(M, SPAN_ALERT("You slice your arm and draw a terrible, malevolent rune!"))
 		take_bleeding_damage(M, null, 20, D_SLASHING)

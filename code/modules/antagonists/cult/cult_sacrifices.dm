@@ -19,7 +19,8 @@
 	var/obj/decal/cultcircle/rune
 	var/turf/centre_turf
 	var/datum/cult/owner
-	var/is_rune
+	var/is_rune = FALSE
+	var/tracking_range = 0
 
 	proc/try_connect(obj/new_object, datum/cult/new_cult)
 		if (new_object == null || new_cult == null)
@@ -31,11 +32,17 @@
 			rune = new_object
 			rune.subscribe_to_cult(owner)
 
+		src.update_range()
+
 		return 1
 
 	proc/sacrifice_human(datum/potential_sacrifice_info/sacrifice)
 		if (!can_sacrifice_human(sacrifice.human))
 			return
+
+		if (is_rune)
+			rune.activate()
+
 		if (sacrifice.has_mind == FALSE)
 			owner.award_points(1, TRUE, "[sacrifice.human_name] was sacrificed, but doesn't have a consciousness strong enough to appease [owner.cult_name].")
 		else
@@ -90,12 +97,18 @@
 		if (sacrifice.human.sleeping == FALSE && sacrifice.human.incrit == FALSE)
 			sacrifice.ever_awake = TRUE
 
-
+	proc/update_range()
+		src.tracking_range = round(max(sacrificial_obj.bound_width, sacrificial_obj.bound_height) / 64, 1)
+		if (!is_rune) // If it's a sacrificial circle, don't give any extra.
+			src.tracking_range += 3
 
 	proc/process()
-		sacrificial_obj.desc = "I looped through this"
-		centre_turf = get_step(get_turf(sacrificial_obj), NORTHEAST) // Object size will mean this might have to change (configured for circles)
-		var/list/within_circle = range(2, centre_turf)
+		if (is_rune)
+			rune.deactivate()
+
+		sacrificial_obj.desc = "Tracking deaths in [tracking_range]"
+		centre_turf = get_turf(sacrificial_obj) // Object size will mean this might have to change (configured for circles)
+		var/list/within_circle = range(src.tracking_range, centre_turf)
 		// Find new humans that might turn up as cult meat soon
 		for (var/mob/living/carbon/human/human in within_circle) // lack of as intentional
 			if (src.can_sacrifice_human(human) == TRUE)
